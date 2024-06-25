@@ -1,1 +1,54 @@
+#include <iostream>
+#include <chrono>
+
+using namespace std;
+using namespace std::chrono;
+
+// Fungsi rekursif untuk menghitung Fibonacci
+long long fibonacciRecursive(int n) {
+    if (n <= 1)
+        return n;
+    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+}
+
+// Fungsi dynamic programming untuk menghitung Fibonacci
+long long fibonacciDP(int n) {
+    if (n <= 1)
+        return n;
+    long long dp[n + 1];
+    dp[0] = 0;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}
+
+int main() {
+    int n[] = {10, 25, 30, 40, 50};
+
+    // Pengukuran waktu untuk fungsi rekursif
+    for (int i = 0; i < 5; i++) {
+        auto start = high_resolution_clock::now();
+        long long result = fibonacciRecursive(n[i]);
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        cout << "Fibonacci ke-" << n[i] << " (Rekursif)" << endl;
+        cout << "Hasil: " << result << endl;
+        cout << "Waktu eksekusi: " << duration.count() << " mikrodetik" << endl << endl;
+    }
+
+    // Pengukuran waktu untuk fungsi DP
+    for (int i = 0; i < 5; i++) {
+        auto start = high_resolution_clock::now();
+        long long result = fibonacciDP(n[i]);
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        cout << "Fibonacci ke-" << n[i] << " (DP)" << endl;
+        cout << "Hasil: " << result << endl;
+        cout << "Waktu eksekusi: " << duration.count() << " mikrodetik" << endl << endl;
+    }
+
+    return 0;
+}
 
